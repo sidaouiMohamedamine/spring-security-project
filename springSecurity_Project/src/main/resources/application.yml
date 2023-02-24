@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/SpringSecurity
+    username: postgres
+    passsword: admin
+    #the purpose of this attribute is to detect the best driver className
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      show-sql: true
+      propreties:
+        format_sql: true
+      database: postresql
