@@ -16,6 +16,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private final JwtService jwtService;
     @Override
     protected void doFilterInternal
             (
@@ -23,6 +24,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     @Nonnull HttpServletResponse response,
                     @Nonnull FilterChain filterChain
             ) throws ServletException, IOException {
-
+             final String authHeader =request.getHeader("Authorization");
+             final String jwt;
+             final String userEmail;
+             if(authHeader== null || !authHeader.startsWith("Bearer ")){
+                 filterChain.doFilter(request,response);
+                 return;
+             }
+             /**
+              * Now we will extract the token from the authentication header.
+              * The header contains jeton kind and hashge algorithme
+              ***/
+            jwt=authHeader.substring(7);
+            /**
+             * todo extract the userEmail from JWT token.
+             *  We need a class to manipulate the jwt.
+             *  We named the class jwtService
+             *  **/
+            userEmail= jwtService.extractUsername(jwt);
     }
 }
